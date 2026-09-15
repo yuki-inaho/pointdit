@@ -172,5 +172,6 @@ checkpoints/
 generation/
 results/
 logs/
+.pixi/
 tmp/
 third_party/dinov3/

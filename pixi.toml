@@ -1,0 +1,24 @@
+[workspace]
+authors = ["yuki-inaho <yoshikawa@inaho.co>"]
+channels = ["conda-forge"]
+name = "pointdit"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[dependencies]
+python = "3.12.*"
+numpy = ">=1.26.0"
+imageio = ">=2.31.0"
+pyyaml = ">=6.0"
+trimesh = ">=4.0.0"
+
+[feature.dev.dependencies]
+pytest = ">=8.0.0"
+
+[environments]
+default = { solve-group = "default" }
+dev = { features = ["dev"], solve-group = "default" }
+
+[tasks]
+test = "pytest -q tests"
+rgbd-to-ply = "python scripts/rgbd_to_ply.py"

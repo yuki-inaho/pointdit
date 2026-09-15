@@ -124,6 +124,31 @@ bash scripts/train_stage2_512_b.sh
 The training scripts in [scripts/](scripts) contain the exact commands and hyperparameters used for the experiments in our paper. Please refer to them for detailed configurations. Before training, you need to download the DINOv3 weights (see [Installation](#installation)) and prepare the datasets per [DATASETS.md](DATASETS.md).
 
 
+## RGB-D point clouds
+
+`util/rgbd_pointcloud.py` back-projects a registered RGB-D pair (RGB image +
+metric depth map + pinhole intrinsics) into a colored point cloud and exports it
+as a binary or ASCII PLY file. Depth can be a float array in meters or an
+integer map scaled by `--depth-scale` (for example `0.001` for 16-bit PNGs in
+millimeters); optional min/max depth clipping, a validity mask, voxel
+downsampling and a camera-to-world `--extrinsics` matrix are supported.
+
+The `pixi` environment provides the light-weight dependencies of this path
+(`numpy`, `imageio`, `pyyaml`, `trimesh`); PyTorch is not needed:
+
+```bash
+pixi install --all
+pixi run -e dev test
+pixi run rgbd-to-ply -- --rgb rgb.png --depth depth.png \
+  --intrinsics intrinsics.json --depth-scale 0.001 --min-depth 0.2 --max-depth 3.0 \
+  --output cloud.ply
+```
+
+`--extrinsics` expects a camera-to-world matrix (`.npy`/`.json`, 4x4 or 3x4) and
+`--flip-yz` converts the output to the Y-up/Z-out convention used by
+`util/viz_pointcloud.py`. Intrinsics files can hold a 3x3 matrix, a flat list of
+9 values, or an `fx`/`fy`/`cx`/`cy` mapping.
+
 ## License
 
 This is not an officially supported Google product. This project is not
