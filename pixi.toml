@@ -22,3 +22,4 @@ dev = { features = ["dev"], solve-group = "default" }
 [tasks]
 test = "pytest -q tests"
 rgbd-to-ply = "python scripts/rgbd_to_ply.py"
+demo = "python scripts/demo_gradio.py"
