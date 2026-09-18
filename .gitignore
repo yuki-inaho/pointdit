@@ -175,3 +175,4 @@ logs/
 .pixi/
 tmp/
 third_party/dinov3/
+.gradio/
